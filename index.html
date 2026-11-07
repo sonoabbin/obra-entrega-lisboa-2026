@@ -96,6 +96,7 @@
       <button class="bt" onclick="baixarExcel()">Descarregar Excel</button>
       <button class="bt claro" onclick="window.print()">Guardar / imprimir PDF</button>
       <button class="bt claro" onclick="copiar()">Copiar endereços filtrados</button>
+      <button class="bt claro" onclick="limpar()">Limpar filtros</button>
     </div>
 
     <div class="ajuda">
@@ -251,6 +252,15 @@ function render(){
   document.getElementById("n-linhas").textContent = lista.length.toLocaleString("pt-PT");
   document.getElementById("n-area").textContent = lista.reduce((s,d)=>s+d.a,0).toLocaleString("pt-PT");
   document.getElementById("n-freg").textContent = new Set(lista.map(d=>d.f)).size;
+  if (!lista.length){
+    document.getElementById("corpo").innerHTML =
+      `<tr><td colspan="6" style="padding:26px 16px;text-align:center;color:#5b7186">
+         <b style="display:block;color:#164E75;font-size:15px;margin-bottom:4px">Nenhuma obra com esse filtro</b>
+         Não há obra desta freguesia com esse tipo de intervenção. Tente outro tipo ou amplie a área mínima.
+         <div style="margin-top:12px"><button class="bt" onclick="limpar()">Ver as 597 obras</button></div>
+       </td></tr>`;
+    return;
+  }
   document.getElementById("corpo").innerHTML = lista.map(d => {
     const link = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(d.m+", Lisboa, Portugal");
     return `<tr><td>${d.m}</td><td>${d.f}</td>
@@ -264,6 +274,16 @@ function render(){
 document.getElementById("busca").oninput = render;
 document.getElementById("ordem").onchange = e => { ordem = e.target.value; render(); };
 document.getElementById("minarea").onchange = render;
+
+function limpar(){
+  filtroFreg = "todas"; filtroTipo = "todos"; ordem = "area";
+  document.getElementById("busca").value = "";
+  document.getElementById("minarea").value = "0";
+  document.getElementById("ordem").value = "area";
+  document.querySelectorAll("#chips-freg .chip").forEach(x => x.classList.toggle("on", x.dataset.freg === "todas"));
+  document.querySelectorAll("#chips-tipo .chip").forEach(x => x.classList.toggle("on", x.dataset.tipo === "todos"));
+  render();
+}
 
 function baixarExcel(){
   const lista = filtrados();
