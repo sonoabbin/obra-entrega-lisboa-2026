@@ -32,6 +32,12 @@
   .bt{background:var(--verde);color:#fff;border:0;border-radius:9px;padding:11px 16px;
     font-size:13.5px;font-weight:700;cursor:pointer}
   .bt.claro{background:#fff;color:var(--azul);border:1px solid var(--linha)}
+  .ajuda{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;background:#fff;border:1px solid var(--linha);
+    border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:13px}
+  .ajuda b{display:block;color:var(--azul);font-size:12px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:7px}
+  .ajuda-passos span{display:block;color:var(--tinta);margin-bottom:3px}
+  .ajuda-contato{color:var(--suave);line-height:1.55;border-left:1px solid var(--linha);padding-left:14px}
+  @media(max-width:760px){.ajuda{grid-template-columns:1fr}.ajuda-contato{border-left:0;padding-left:0;border-top:1px solid var(--linha);padding-top:12px}}
   .painel{background:#fff;border:1px solid var(--linha);border-radius:12px;padding:14px 16px;margin-bottom:14px}
   .linha-campo{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
   .linha-campo:last-child{margin-bottom:0}
@@ -60,6 +66,7 @@
   .pe b{color:var(--tinta)}
   @media print{
     header,.barra,.painel,.pe,#porta{display:none !important}
+    .ajuda{display:grid !important;border:1px solid #ccc}
     body{background:#fff}
     table{border:0}
     th{background:#eee}
@@ -89,6 +96,19 @@
       <button class="bt" onclick="baixarExcel()">Descarregar Excel</button>
       <button class="bt claro" onclick="window.print()">Guardar / imprimir PDF</button>
       <button class="bt claro" onclick="copiar()">Copiar endereços filtrados</button>
+    </div>
+
+    <div class="ajuda">
+      <div class="ajuda-passos">
+        <b>Como usar em 3 passos</b>
+        <span>1. Clique na sua freguesia (ou deixe em "Todas").</span>
+        <span>2. Ordene por área — as maiores primeiro.</span>
+        <span>3. Clique em "Mapa" para abrir o endereço e montar a rota.</span>
+      </div>
+      <div class="ajuda-contato">
+        <b>Dúvidas?</b> Responda o e-mail da compra ·
+        +351 921 059 754 · willian.abbin@gmail.com
+      </div>
     </div>
 
     <div class="painel">
